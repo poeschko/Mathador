@@ -1,0 +1,33 @@
+This is a simplistic implementation of some aspects of the Mathematica Language in C++. The main program is in Mathador.cpp and yields an interactive console program to enter queries.
+
+Supported functions:
+
+Basic arithmetic: Plus (+), Subtract (-), Minus (-), Times (*), Divide (/), Power (^), NonCommutativeMultiply (**), Abs
+
+Elementary Functions: Sin, Cos
+
+Numeric Evaluation: N
+
+Lists: List, Length
+
+Assignment: Set (=), SetDelayed (:=), UpSet (^=), UpSetDelayed (^:=), Increment (++), PreIncrement (++)
+
+Tests: Equal (==), Unequal (!=), Less (<), Greater (>), LessEqual (<=), GreaterEqual (>=)
+
+Logical operations: Not (!), And (&&), Or (||)
+
+Flow control: CompoundExpression (;), If, For
+
+Attributes: Attributes, SetAttributes, ClearAttributes
+
+Evaluation control: Unevaluated
+
+Expression structure: Head, FullForm
+
+Functional operations: Function (&), Slot (#), SlotSequence (##), Apply (@@), Map (/@)
+
+Pattern matching: Pattern (:), Blank (_), BlankSequence (__), BlankNullSequence (___), MatchQ
+
+Rule application: Rule (->), RuleDelayed (:>), Replace, ReplaceAll (/.), ReplaceRepeated (//.)
+
+Scoping: Module
