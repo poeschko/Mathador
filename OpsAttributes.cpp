@@ -54,13 +54,6 @@ void OpSetAttributes::Apply(Expression *expression, Calculator *calculator, int3
 		}
 		else
 			throw EvaluateException("SetAttributes expects a symbol or a list of symbols as attributes.");
-		//def->Attributes().Include(
-		/*delete expression->Head();
-		expression->Head(new Expression("List"));
-		set<string> attributes = def->Attributes().AsStringSet();
-		expression->DeleteLeaves();
-		for(set<string>::const_iterator item = attributes.begin(); item != attributes.end(); ++item)
-			expression->AppendLeaf(new Expression(*item));*/
 	}
 	else
 		throw EvaluateException("SetAttributes expects a symbol as its first argument.");

@@ -62,25 +62,12 @@ NumberPtr Number::Read(Input &input)
 		return NumberPtr(intValue);
 }
 
-/*NumberPtr Number::Divide(Number *number)
-{
-
-}
-
-NumberPtr Number::Mod(Number *number)
-{
-	MachineInteger minusOne(-1);
-	NumberPtr div(Times(number->Power(&minusOne).get()));
-}*/
-
 NumberPtr Number::Sin()
 {
     throw NumberException("Not implemented yet.");
-	//return 0;
 }
 
 NumberPtr Number::Cos()
 {
     throw NumberException("Not implemented yet.");
-	//return 0;
 }

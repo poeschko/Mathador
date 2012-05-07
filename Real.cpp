@@ -36,10 +36,6 @@ MachineReal::MachineReal(const auto_ptr<Integer> &intValuePtr) : value(0.0)
 {
 	const Integer &intValue(*intValuePtr);
 	static const RealType digitSize(Integer::DIGIT_RANGE);
-	/*for(Integer::IntVector::const_reverse_iterator digit = intValue->digits.rbegin(); digit != intValue->digits.rend(); ++digit)
-		value = value * digitSize + *digit;
-	if(intValue->sign)
-		value = -value;*/
 	for(Integer::IntVector::const_reverse_iterator digit = intValue.digits.rbegin(); digit != intValue.digits.rend(); ++digit)
 		value = value * digitSize + *digit;
 	if(intValue.sign)
@@ -66,11 +62,6 @@ auto_ptr<MachineReal> MachineReal::DoConvert(Number *number)
 	Rational *rational;
 	if(integer = dynamic_cast<Integer*>(number))
 	{
-		//RealType value(0);
-		//RealType digitSize(pow(static_cast<RealType>(256), static_cast<RealType>(sizeof(IntegerType))));
-		//for(Integer::IntVector::const_iterator digit = integer->digits.begin(); digit != integer->digits.end(); ++digit)
-		//	value = value * digitSize + *digit;
-		//return auto_ptr<MachineReal>(new MachineReal(static_cast<RealType>(value)));
 		return auto_ptr<MachineReal>(new MachineReal(*integer));
 	}
 	else if(rational = dynamic_cast<Rational*>(number))
@@ -79,47 +70,28 @@ auto_ptr<MachineReal> MachineReal::DoConvert(Number *number)
 		auto_ptr<MachineReal> numerator(new MachineReal(rational->Numerator()));
 		auto_ptr<MachineReal> denominator(new MachineReal(rational->Denominator()));
 		return numerator->Times(dynamic_cast<MachineReal*>(denominator->Power(&minusOne).get()));
-		/*if((numerator = dynamic_cast<Integer*>(rational->Numerator())) &&
-			(denominator = dynamic_cast<Integer*>(rational->Denominator())))
-		{
-			return auto_ptr<MachineReal>(new MachineReal(static_cast<RealType>(numerator->Value() / denominator->Value())));
-		}*/
 
 	}
 	throw NumberException("Unsupported conversion to MachineReal.");
-	//ArbitraryReal arbitrary;
-	//return arbitrary.Convert(number);
 }
 
 auto_ptr<MachineReal> MachineReal::Plus(MachineReal *number)
 {
-	//MachineReal *real(dynamic_cast<MachineReal*>(number));
-	//if(!real)
-	//	throw NumberException("MachineReal expected.");
 	return auto_ptr<MachineReal>(new MachineReal(value + number->value));
 }
 
 auto_ptr<MachineReal> MachineReal::Times(MachineReal *number)
 {
-	//MachineReal *real(dynamic_cast<MachineReal*>(number));
-	//if(!real)
-	//	throw NumberException("MachineReal expected.");
 	return auto_ptr<MachineReal>(new MachineReal(value * number->value));
 }
 
 auto_ptr<Number> MachineReal::Power(MachineReal *number)
 {
-	//MachineReal *real(dynamic_cast<MachineReal*>(number));
-	//if(!real)
-	//	throw NumberException("MachineReal expected.");
 	return NumberPtr(new MachineReal(pow(value, number->value)));
 }
 
 CompareResult MachineReal::Compare(MachineReal *number)
 {
-	//MachineReal *real(dynamic_cast<MachineReal*>(number));
-	//if(!real)
-	//	throw NumberException("MachineReal expected.");
 	RealType value2 = number->value;
 	if(value < value2)
 		return crLess;
@@ -174,7 +146,6 @@ auto_ptr<ArbitraryReal> ArbitraryReal::DoConvert(Number *number)
 {
 	// TODO
 	throw NumberException("Not implemented yet.");
-	//return 0;
 }
 
 void ArbitraryReal::Print(Calculator *calculator, PrintMode mode)
@@ -199,39 +170,24 @@ NumberPtr ArbitraryReal::Abs()
 
 auto_ptr<ArbitraryReal> ArbitraryReal::Plus(ArbitraryReal *number)
 {
-	//ArbitraryReal *real(dynamic_cast<ArbitraryReal*>(number));
-	//if(!real)
-	//	throw NumberException("ArbitraryReal expected.");
 	// TODO
 	throw NumberException("Not implemented yet.");
-	//return 0;
 }
 
 auto_ptr<ArbitraryReal> ArbitraryReal::Times(ArbitraryReal *number)
 {
-	//ArbitraryReal *real(dynamic_cast<ArbitraryReal*>(number));
-	//if(!real)
-	//	throw NumberException("ArbitraryReal expected.");
 	// TODO
 	throw NumberException("Not implemented yet.");
-	//return 0;
 }
 
 auto_ptr<Number> ArbitraryReal::Power(ArbitraryReal *number)
 {
-	//ArbitraryReal *real(dynamic_cast<ArbitraryReal*>(number));
-	//if(!real)
-	//	throw NumberException("ArbitraryReal expected.");
 	// TODO
 	throw NumberException("Not implemented yet.");
-	//return 0;
 }
 
 CompareResult ArbitraryReal::Compare(ArbitraryReal *number)
 {
-	//ArbitraryReal *real(dynamic_cast<ArbitraryReal*>(number));
-	//if(!real)
-	//	throw NumberException("ArbitraryReal expected.");
 	// TODO
 	return crEqual;
 }

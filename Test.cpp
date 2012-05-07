@@ -24,8 +24,6 @@ Test::~Test()
 bool Test::Run()
 {
 	cout << "Tests:" << endl;
-	//Integer::IntVector digits(2, 0xffffffff);
-	//Integer::IntVector digits(2, 0x0000fffe);
 	Integer::IntVector digits;
 	digits.push_back(0x341535f4);
 	digits.push_back(0x53415345);

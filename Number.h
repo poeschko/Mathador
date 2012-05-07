@@ -13,7 +13,6 @@
 
 // Forward declarations
 class Number;
-//class ConvertingNumber;
 
 // Typedefs
 //typedef std::auto_ptr<ConvertingNumber> ConvertingNumberPtr;
@@ -44,8 +43,6 @@ public:
 	virtual NumberPtr Plus(Number *number) = 0;
 	virtual NumberPtr Times(Number *number) = 0;
 	virtual NumberPtr Power(Number *number) = 0;
-	//virtual NumberPtr Divide(Number *number) = 0;
-	//virtual NumberPtr Mod(Number *number) = 0;
 	virtual CompareResult Compare(Number *number) = 0;
 	virtual void Negate() = 0;
 	virtual NumberPtr Abs() = 0;

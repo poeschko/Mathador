@@ -8,8 +8,6 @@
 #pragma once
 #include <map>
 #include <vector>
-//using std::vector;
-//using std::multimap;
 
 template <class BaseType, typename KeyType>
 class Factory

@@ -90,7 +90,6 @@ auto_ptr<Number> Rational::Times(Rational *number)
 {
 	auto_ptr<Integer> num(numerator.Times(&number->numerator));
 	auto_ptr<Integer> denom(denominator.Times(&number->denominator));
-	//return auto_ptr<Rational>(new Rational(num, denom))->Reduce();
 	Rational result(num, denom);
 	return result.Reduce();
 }
@@ -99,7 +98,6 @@ auto_ptr<Number> Rational::Power(Rational *number)
 {
 	// TODO: implement
 	throw NumberException("Not implemented yet.");
-	//return 0;
 }
 
 CompareResult Rational::Compare(Rational *number)
@@ -108,60 +106,6 @@ CompareResult Rational::Compare(Rational *number)
 	auto_ptr<Integer> right(denominator.Times(&number->numerator));
 	return left->Compare(right.get());
 }
-
-/*
-void Rational::Apply(Expression *expression, Calculator *calculator, int32 recursions)
-{
-	if(expression->LeafCount() != 2)
-		throw ArgumentException("Rational expects 2 arguments.");
-	// If both numerator and denominator are Integers, try to reduce the fraction.
-	Integer *intHead1, *intHead2;
-	if((intHead1 = expression->Leaf(0)->IntegerHead()) &&
-		(intHead2 = expression->Leaf(1)->IntegerHead()))
-	{
-		// Reduce fraction
-		intHead1->ReduceFraction(intHead2);
-		// If denominator = 1: not really a fraction
-		// If denominator = 0: throw exception
-		if(intHead2->Value() == 1)
-			expression->AssignLeaf(0);
-		else if(intHead2->Value() == 0)
-			throw MathException("Integer division by 0.");
-		return;
-	}
-	// If one operand is Real, numerically evaluate both.
-	if(expression->Leaf(0)->RealHead() || expression->Leaf(1)->RealHead())
-	{
-		expression->Leaf(0)->ApplyN(calculator);
-		expression->Leaf(1)->ApplyN(calculator);
-	}
-	// If both numerator and denominator are Reals, simply carry out the division and
-	// return the Real result
-	Real *realHead1, *realHead2;
-	if((realHead1 = expression->Leaf(0)->RealHead()) &&
-		(realHead2 = expression->Leaf(1)->RealHead()))
-	{
-        Real minusOne(-1);
-		realHead2->Power(&minusOne);
-		realHead1->Times(realHead2);
-		expression->AssignLeaf(0);
-	}
-}
-
-void Rational::PrintExpression(Expression *expression, Calculator *calculator, PrintMode mode)
-{
-	if(expression->LeafCount() != 2)
-		throw PrintException("Rational expects 2 arguments.");
-	if(expression->Leaf(0)->NumberHead() && expression->Leaf(1)->NumberHead())
-	{
-		expression->Leaf(0)->Print(calculator, mode);
-		cout << "/";
-		expression->Leaf(1)->Print(calculator, mode);
-	}
-	else
-		Predefined::PrintExpression(expression, calculator, mode);
-}
-*/
 
 NumberPtr Rational::Reduce()
 {
@@ -214,6 +158,4 @@ NumberPtr Rational::Reduce()
 			numerator.Divide(gcD.get()),
 			denominator.Divide(gcD.get())));
 	}
-	//value /= gcD;
-	//denominator->value /= gcD;
 }

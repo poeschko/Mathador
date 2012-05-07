@@ -89,23 +89,18 @@ auto_ptr<Complex> Complex::Plus(Complex *number)
 auto_ptr<Complex> Complex::Times(Complex *number)
 {	
     throw NumberException("Not implemented yet.");
-	//return 0;	// TODO: implement
+	// TODO: implement
 }
 
 auto_ptr<Complex> Complex::Power(Complex *number)
 {	
     throw NumberException("Not implemented yet.");
-	//return 0;	// TODO: implement
+	// TODO: implement
 }
 
 CompareResult Complex::Compare(Complex *number)
 {	
 	throw NumberException("Complex not compareable.");
-	/*Complex *complex(dynamic_cast<Complex*>(number));
-	if(!complex)
-		throw NumberException("Complex expected.");
-	return 0;*/
-	//return new Complex(real->Plus(complex->real), imaginary->Plus(complex->imaginary));
 }
 
 void OpAbs::Apply(Expression *expression, Calculator *calculator, int32 recursions)

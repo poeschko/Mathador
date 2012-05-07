@@ -42,7 +42,6 @@ Definition::Definition(const Definition &instance)
 
 Definition::~Definition()
 {
-	//delete value;
 	for(ExprVector::const_iterator down = downValues.begin(); down != downValues.end(); ++down)
 		delete (*down);
 	for(ExprVector::const_iterator up = upValues.begin(); up != upValues.end(); ++up)

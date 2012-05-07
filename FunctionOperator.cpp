@@ -24,23 +24,10 @@ Expression *FunctionOperator::Group(PartsIterator part)
 	Expression *leaves = (*nextItr)->Group(nextItr);
 
 	leaves->Head(head);
-	//delete *prevItr;
 	prevItr.Erase();
 	nextItr.Erase();
 	delete this;
 	*part = leaves;
 
 	return leaves;
-
-	/*// "Clue" neighbors
-	ExpressionPtr op(new Expression);
-	op->Head(prev);
-	op->AppendLeaf(prev);
-	op->AppendLeaf(next);
-	prevItr.Erase();
-	nextItr.Erase();
-	delete this;
-	*part = op.get();*/
-
-	//return op.release();
 }

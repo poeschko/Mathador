@@ -37,7 +37,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-//#define REGISTER_OPERATOR(op) defs.DefineOperator<op>(); parser.RegisterOperator<op>();
 
 #define REGISTER_OPERATOR(op) Register<op>();
 
@@ -45,13 +44,11 @@ Calculator::Calculator()
 {
 	// Initialize member objects
 	parser.SetCalculator(this);
-	//stack.SetCalculator(this);
 	defs.SetCalculator(this);
 	
 	// Register pre-defined operators
 
 	// Complex
-	//REGISTER_OPERATOR(Complex)
 	REGISTER_OPERATOR(OpAbs)
 
 	// Evaluation control
@@ -75,9 +72,6 @@ Calculator::Calculator()
 	REGISTER_OPERATOR(BlankSequence)
 	REGISTER_OPERATOR(BlankNullSequence)
 	REGISTER_OPERATOR(MatchQ)
-
-	// Rational
-	//REGISTER_OPERATOR(Rational)
 
 	// Rule
 	REGISTER_OPERATOR(OpRule)
@@ -138,98 +132,6 @@ Calculator::Calculator()
 
 	// Scoping
 	REGISTER_OPERATOR(Module)
-
-
-	/*
-	// Complex
-	RegisterOperator<Complex>();
-	RegisterOperator<OpAbs>();
-
-	// Evaluation control
-	RegisterOperator<Unevaluated>();
-
-	// FlowControl
-	RegisterOperator<CompoundExpression>();
-	RegisterOperator<OpIf>();
-	RegisterOperator<OpFor>();
-
-	// List
-	RegisterOperator<List>();
-	RegisterOperator<Length>();
-
-	// Numeric evaluation
-	RegisterOperator<OpN>();
-
-	// Pattern matching
-	RegisterOperator<Pattern>();
-	RegisterOperator<Blank>();
-	RegisterOperator<BlankSequence>();
-	RegisterOperator<BlankNullSequence>();
-	RegisterOperator<MatchQ>();
-
-	// Rational
-	RegisterOperator<Rational>();
-
-	// Rule
-	RegisterOperator<OpRule>();
-	RegisterOperator<OpRuleDelayed>();
-	RegisterOperator<OpReplace>();
-	RegisterOperator<OpReplaceAll>();
-	RegisterOperator<OpReplaceRepeated>();
-
-	// Arithmetic
-	RegisterOperator<Plus>();
-	RegisterOperator<Times>();
-	RegisterOperator<Power>();
-	RegisterOperator<Minus>();
-	RegisterOperator<Subtract>();
-	RegisterOperator<Divide>();
-	RegisterOperator<NonCommutativeMultiply>();
-
-	// Elementary
-	RegisterOperator<Sin>();
-	RegisterOperator<Cos>();
-
-	// Logical
-	RegisterOperator<Not>();
-	RegisterOperator<OpAnd>();
-	RegisterOperator<OpOr>();
-
-	// Functional
-	RegisterOperator<Function>();
-	RegisterOperator<Slot>();
-	RegisterOperator<SlotSequence>();
-	RegisterOperator<OpApply>();
-	RegisterOperator<OpMap>();
-
-	// Assignment
-	RegisterOperator<Set>();
-	RegisterOperator<SetDelayed>();
-	RegisterOperator<UpSet>();
-	RegisterOperator<UpSetDelayed>();
-	RegisterOperator<Increment>();
-	RegisterOperator<PreIncrement>();
-
-	// Attributes
-	RegisterOperator<OpAttributes>();
-	RegisterOperator<OpSetAttributes>();
-	RegisterOperator<OpClearAttributes>();
-
-	// Expression Structure
-	RegisterOperator<FullForm>();
-	RegisterOperator<OpHead>();
-
-	// Tests
-	RegisterOperator<OpEqual>();
-	RegisterOperator<OpUnequal>();
-	RegisterOperator<OpLess>();
-	RegisterOperator<OpGreater>();
-	RegisterOperator<OpLessEqual>();
-	RegisterOperator<OpGreaterEqual>();
-
-	// Scoping
-	RegisterOperator<Module>();
-	*/
 }
 
 Calculator::~Calculator()

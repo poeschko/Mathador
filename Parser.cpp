@@ -37,11 +37,6 @@ OperatorPtr Parser::CreateOperator(string id, Part *prev)
 		return OperatorPtr(0);
 	if(ops.size() == 1)
 	{
-		/*while(ops.size() > 1)
-		{
-			delete ops.back();
-			ops.pop_back();
-		}*/
 		return OperatorPtr(ops.front());
 	}
 	Operator *prevOp = dynamic_cast<Operator*>(prev);
@@ -86,12 +81,7 @@ OperatorPtr Parser::CreateOperator(string id, Part *prev)
 // The structure process follows later and depends on the input mode infix <-> postfix.)
 CompoundPartPtr Parser::Parse(Input &input)
 {
-	//Expression *result = new Expression;
-	//Expression *object(0);
 	CompoundPartPtr result(new CompoundPart);
-	//result.reset(new CompoundPart);
-	//try
-	//{
 	while(!input.AtEnd())
 	{
 		PartPtr part;
@@ -113,8 +103,6 @@ CompoundPartPtr Parser::Parse(Input &input)
 			// Otherwise create a symbol.
 			if(!part.get())
 			{
-				//if(id != "")
-				//	part.reset(new Expression(id));
 				// Create Blank / BlankSequence / BlankNullSequence
 				Expression *blank(0);
 				if(input.Current() == '_')
@@ -147,14 +135,6 @@ CompoundPartPtr Parser::Parse(Input &input)
 					// Otherwise return the blank.
 					if(id != "")
 					{
-						/*Expression *pattern = new Expression("Pattern", 2);
-						pattern->AppendLeaf(part->Structure(deleteIt));
-						pattern->AppendLeaf(blank);
-						object = pattern;*/
-						/*FunctionPartPtr pattern(new FunctionPart("Pattern"));
-						pattern->AppendLeaf(part.release());
-						pattern->AppendLeaf(blank);
-						part = pattern;*/
 						SequencePartPtr leaves(new SequencePart);
 						leaves->AppendLeaf(new Expression(id));
 						leaves->AppendLeaf(blank);
@@ -163,7 +143,6 @@ CompoundPartPtr Parser::Parse(Input &input)
 					}
 					else
 						part = PartPtr(blank);
-						//part.reset(blank);
 				}
 				else
 					part = PartPtr(new Expression(id));
@@ -172,35 +151,21 @@ CompoundPartPtr Parser::Parse(Input &input)
 		// Number
 		else if(c >= '0' && c <= '9' || (c == '.' && input.NextChar() >= '0' && input.NextChar() <= '9'))
 		{
-			//object = new Expression;
-			//object->Head(Number::Read(input));
-			//Expression *number = new Expression;
-			//number->Head(Number::Read(input));
-			//part.reset(new Expression);
-			//part.reset(number);
 			ExprPtr number(new Expression);
-			//input.Next();
 			number->Head(Number::Read(input).release());
 			part = number;
-			//part.reset(new Expression(14));
-			//part.reset(new Expression);
 		}
 		// List
 		else if(c == '{')
 		{
-			//object = new Expression("List", 0);
-			//FunctionPartPtr list(new FunctionPart("List"));
 			SequencePartPtr items(new SequencePart);
-			//list->Head(new Expression("List"));
 			while(true)
 			{
 				input.Next();
 				if(input.Current() == '}')
 					break;
-				//Expression *leaf = Parse(input);
 				CompoundPartPtr leaf = Parse(input);
 				items->AppendLeaf(leaf.release());
-				//object->AppendLeaf(leaf);
 				input.SkipBlanks();
 				if(input.Current() == '}')
 					break;
@@ -215,7 +180,6 @@ CompoundPartPtr Parser::Parse(Input &input)
 		{
 			input.Next();
 			part = Parse(input);
-			//object = Parse(input);
 			if(input.Current() != ')')
 				throw ParseException("Closing bracket expected.");
 			input.Next();
@@ -227,15 +191,8 @@ CompoundPartPtr Parser::Parse(Input &input)
 				throw ParseException("Unexpected argument list.");
 			if(prev->AsOperator())
 				throw ParseException("Operator must not be followed by argument list.");
-			//object = new Expression;
-			//FunctionPartPtr function(new FunctionPart);
-			// Take previous object in expression as function head
-			//object->Head(prev);
-			//result->PopLastLeaf();
 			result->AppendSubPart(new FunctionOperator);
 			SequencePartPtr arguments(new SequencePart);
-			//function->Head(prev);
-			//result->PopLastSubPart();
 			// Read arguments
 			while(true)
 			{
@@ -243,8 +200,6 @@ CompoundPartPtr Parser::Parse(Input &input)
 				if(input.Current() == ']')
 					break;
 				CompoundPartPtr leaf = Parse(input);
-				//object->AppendLeaf(leaf);
-				//function->AppendLeaf(leaf.release());
 				arguments->AppendLeaf(leaf.release());
 				input.SkipBlanks();
 				if(input.Current() == ']')
@@ -252,8 +207,6 @@ CompoundPartPtr Parser::Parse(Input &input)
 				else if(input.Current() != ',')
 					throw ParseException("List item delimiter expected.");
 			}
-			//part = function;
-			//part = PartPtr(new CompoundPart(
 			part = arguments;
 			input.Next();
 		}
@@ -268,22 +221,16 @@ CompoundPartPtr Parser::Parse(Input &input)
 				// Otherwise try to create operator
 				if(id == "##")
 				{
-					//object = new Expression("SlotSequence", 0);
-					//part.reset(new FunctionPart("SlotSequence"));
 					part.reset(new CompoundPart(new Expression("SlotSequence"), new SequencePart));
-					//slot->Head(new Expression("SlotSequence"));
 					break;
 				}
 				else if(id == "#")
 				{
-					//FunctionPartPtr slot(new FunctionPart("Slot"));
-					//object = new Expression("Slot", 0);
 					SequencePartPtr slotArg(new SequencePart);
 					if(input.Current() >= '0' && input.Current() <= '9')
 					{
 						IntegerType index = Number::ReadInteger(input);
 						Expression *indexExpr = new Expression(index);
-						//object->AppendLeaf(indexExpr);
 						slotArg->AppendLeaf(indexExpr);
 					}
 					part = PartPtr(new CompoundPart(new Expression("Slot"), slotArg.release()));
@@ -302,39 +249,27 @@ CompoundPartPtr Parser::Parse(Input &input)
 		if(!part.get())
 			break;
 		// Insert multiplication between unlinked operands
-		//if(calculator && calculator->Mode() == imInfix)
-		//{
-			if(result->HasSubParts())
-				prev = result->LastSubPart();
-			else
-				prev = 0;
-			//Operator *prevOp = dynamic_cast<Operator*>(prev);
-			//Operator *curOp = dynamic_cast<Operator*>(part.get())
-			Operator *prevOp = prev ? prev->AsOperator() : 0;
-			Operator *curOp = part->AsOperator();
-			// Insert Times if...
-			// * both operands are no operators
-			// * both operands are operators, and previous is postfix and current is prefix
-			// * previous operator is postfix and current is no operator
-			// * previous is no operator and current operator is prefix
-			if((prev && !prevOp && !curOp) ||
-				(prevOp && curOp && prevOp->Type() == otPostfix && curOp->Type() == otPrefix) ||
-				(prevOp && prevOp->Type() == otPostfix && !curOp) ||
-				(prev && !prevOp && curOp && curOp->Type() == otPrefix))
-			{
-				Operator *times = new Times;
-				result->AppendSubPart(times);
-			}
-		//}
+		if(result->HasSubParts())
+			prev = result->LastSubPart();
+		else
+			prev = 0;
+		Operator *prevOp = prev ? prev->AsOperator() : 0;
+		Operator *curOp = part->AsOperator();
+		// Insert Times if...
+		// * both operands are no operators
+		// * both operands are operators, and previous is postfix and current is prefix
+		// * previous operator is postfix and current is no operator
+		// * previous is no operator and current operator is prefix
+		if((prev && !prevOp && !curOp) ||
+			(prevOp && curOp && prevOp->Type() == otPostfix && curOp->Type() == otPrefix) ||
+			(prevOp && prevOp->Type() == otPostfix && !curOp) ||
+			(prev && !prevOp && curOp && curOp->Type() == otPrefix))
+		{
+			Operator *times = new Times;
+			result->AppendSubPart(times);
+		}
 		// Append the object to resulting expression
 		result->AppendSubPart(part.release());
 	}
-	/*}
-	catch(...)
-	{
-		//delete object;
-		//delete result;
-		throw;
-	}*/
 	return result;
 }

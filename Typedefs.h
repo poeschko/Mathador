@@ -26,12 +26,6 @@ std::auto_ptr<Target> auto_ptr_cast(std::auto_ptr<Source> source)
 }
 
 int64 abs(int64 x);
-/*int32 max(const int32 x, const int32 y);
-int64 max(const int64 x, const int64 y);
-uint32 max(const uint32 x, const uint32 y);
-uint64 max(const uint64 x, const uint64 y);
-size_t max(const size_t x, const size_t y);
-int64 min(const int64 x, const int64 y);*/
 
 template <typename Type>
 Type max(const Type x, const Type y)

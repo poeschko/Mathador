@@ -56,12 +56,8 @@ ExprPtr Integer::Clone()
 
 NumberPtr Integer::ApplyN()
 {
-	/*MachineReal real;
-	ConvertingNumberPtr converted(real.Convert(this));
-	return converted;*/
 	MachineReal real;
 	return NumberPtr(real.Convert(this));
-	//return MachineReal::StaticConvert(this);
 }
 
 bool Integer::IsZero() const
@@ -76,13 +72,6 @@ bool Integer::IsZero() const
 
 void Integer::Print(Calculator *calculator, PrintMode mode)
 {
-	/*if(sign)
-		cout << "-0x";
-	else
-		cout << "0x";
-	cout.fill('0');
-	for(IntVector::reverse_iterator digit = digits.rbegin(); digit != digits.rend(); ++digit)
-		cout << hex << setw(8) << *digit;*/
 	if(IsZero())
 	{
 		cout << "0";
@@ -98,14 +87,11 @@ void Integer::Print(Calculator *calculator, PrintMode mode)
 	{
 		auto_ptr<Integer> mod;
 		auto_ptr<Integer> newQuotient(oldQuotient);
-		//auto_ptr<Integer> quotient;
 		oldQuotient = quotient;
 		oldQuotient->DivMod(&ten, newQuotient, mod);
-		//auto_ptr<Integer> mod(quotient->Mod(&ten));
 		char digit = mod->digits.at(0) + '0';
 		number.insert(number.begin(), digit);
 		quotient = newQuotient;
-		//quotient = quotient->Divide(&ten);
 	}
 	cout << number;
 }
@@ -123,7 +109,6 @@ auto_ptr<Integer> Integer::Plus(Integer *number)
 	auto_ptr<Integer> result(new Integer);
 	result->digits.clear();
 	IntVector::size_type sumsize(max(digits.size(), number->digits.size()));
-	//result->digits.reserve(sumsize);
 	if(sign == number->sign)
 	{
 		// perform addition
@@ -238,11 +223,6 @@ auto_ptr<Number> Integer::Power(Integer *number)
 void Integer::DivMod(Integer *number, auto_ptr<Integer> &result,
 	auto_ptr<Integer> &mod)
 {
-	//result = auto_ptr<Integer>(new Integer(sign ^ number->sign, IntVector()));
-	//static auto_ptr<Integer> theResult = auto_ptr<Integer>(new Integer(sign ^ number->sign, IntVector(digits.size(), 0)));
-	//result = theResult;
-	//result->sign = sign ^ number->sign;
-	//result->digits.clear();
 	IntVector::const_iterator leading(number->digits.end());
 	--leading;
 	while(*leading == 0)
@@ -252,9 +232,6 @@ void Integer::DivMod(Integer *number, auto_ptr<Integer> &result,
 			--leading;
 	mod = auto_ptr<Integer>(new Integer(*this));
 
-	//auto_ptr<Integer> product(new Integer(false, IntVector(number->digits.size() + 1, 0)));
-	///IntVector product(number->digits.size() + 1, 0);
-
 	IntVector::difference_type numberLength(leading - number->digits.begin());
 	result->digits.resize(mod->digits.size() - numberLength);
 	for(IntVector::difference_type digit = mod->digits.size() - 1; digit >= numberLength; --digit)
@@ -263,110 +240,10 @@ void Integer::DivMod(Integer *number, auto_ptr<Integer> &result,
 		if(digit < static_cast<Extended>(mod->digits.size() - 1))
 			curDigit |= static_cast<Extended>(mod->digits[digit + 1]) << DIGIT_BITS;
 		Digit quotient(static_cast<Digit>(curDigit / *leading));
-		//result->digits.push_front(quotient);
 		result->digits[digit - numberLength] = quotient;
 		Integer quotientInt(-static_cast<SignedExtended>(quotient));
-		//Integer quotientInt(quotient);
 		auto_ptr<Integer> product(number->Times(&quotientInt));
-		//auto_ptr<Integer> product(new Integer(*mod.get()));
 		product->digits.insert(product->digits.begin(), digit, 0);
-
-		/*
-		// multiplication number * quotient
-		//auto_ptr<Integer> product(new Integer(false, IntVector(number->digits.size() + 1, 0)));
-		for(IntVector::iterator pdigit = product.begin(); pdigit != product.end(); ++pdigit)
-			*pdigit = 0;
-		for(IntVector::size_type i = 0; i < number->digits.size(); ++i)
-		{
-			Extended digit1(number->digits.at(i));
-			//Extended digit2(number->digits.at(j));
-			Extended innerProduct(digit1 * quotient);
-			Digit low(static_cast<Digit>(innerProduct % DIGIT_RANGE));
-			Digit high(static_cast<Digit>(innerProduct >> DIGIT_BITS));
-			// index = i
-			product.at(i) += low;
-			Digit carry((product.at(i) < low) ? 1 : 0);
-			product.at(i + 1) += carry;
-			carry = (product.at(i + 1) < carry) ? 1 : 0;
-			product.at(i + 1) += high;
-			carry += (product.at(i + 1) < high) ? 1 : 0;
-			for (IntVector::size_type k = i + 2; carry > 0; ++k)
-			{
-				product.at(k) += carry;
-				carry = (product.at(k) < carry) ? 1 : 0;
-			}
-		}
-
-		// subtraction (mod - product), whereby product's lowest [digit] digits are 0
-		// and product has at most as many digits as mod has
-		//auto_ptr<Integer> subtractionResult(new Integer(false, IntVector(mod->digits.begin(), mod->digits.begin() + digit)));
-		SignedExtended overflow(0);
-		for(IntVector::size_type subDigit = digit; subDigit < mod->digits.size(); ++subDigit)
-		{
-			SignedExtended digit1(mod->digits.at(subDigit));
-			SignedExtended digit2(subDigit - digit < product.size() ? product.at(subDigit - digit) : 0);
-			SignedExtended difference(overflow + digit1 - digit2);
-			if(difference < 0)
-			{
-				difference += DIGIT_RANGE;
-				overflow = -1;
-			}
-			else
-				overflow = 0;
-			//subtractionResult->digits.push_back(static_cast<Digit>(difference));
-			mod->digits.at(subDigit) = static_cast<Digit>(difference);
-		}*/
-
-
-		/*
-		// multiplication number * quotient
-		//auto_ptr<Integer> product(new Integer(false, IntVector(number->digits.size() + 1, 0)));
-		//for(IntVector::iterator pdigit = product.begin(); pdigit != product.end(); ++pdigit)
-		//	*pdigit = 0;
-		product.assign(product.size(), 0);
-		for(IntVector::size_type i = 0; i < number->digits.size(); ++i)
-		{
-			Extended digit1(number->digits[i]);
-			//Extended digit2(number->digits.at(j));
-			Extended innerProduct(digit1 * quotient);
-			Digit low(static_cast<Digit>(innerProduct % DIGIT_RANGE));
-			Digit high(static_cast<Digit>(innerProduct >> DIGIT_BITS));
-			// index = i
-			product[i] += low;
-			Digit carry((product[i] < low) ? 1 : 0);
-			product[i + 1] += carry;
-			carry = (product[i + 1] < carry) ? 1 : 0;
-			product[i + 1] += high;
-			carry += (product[i + 1] < high) ? 1 : 0;
-			for (IntVector::size_type k = i + 2; carry > 0; ++k)
-			{
-				product[k] += carry;
-				carry = (product[k] < carry) ? 1 : 0;
-			}
-		}
-
-		// subtraction (mod - product), whereby product's lowest <digit> digits are 0
-		// and product has at most as many digits as mod has
-		//auto_ptr<Integer> subtractionResult(new Integer(false, IntVector(mod->digits.begin(), mod->digits.begin() + digit)));
-		SignedExtended overflow(0);
-		for(IntVector::size_type subDigit = digit; subDigit < mod->digits.size(); ++subDigit)
-		{
-			SignedExtended digit1(mod->digits[subDigit]);
-			SignedExtended digit2(subDigit - digit < product.size() ? product[subDigit - digit] : 0);
-			SignedExtended difference(overflow + digit1 - digit2);
-			if(difference < 0)
-			{
-				difference += DIGIT_RANGE;
-				overflow = -1;
-			}
-			else
-				overflow = 0;
-			//subtractionResult->digits.push_back(static_cast<Digit>(difference));
-			mod->digits[subDigit] = static_cast<Digit>(difference);	
-		}
-		*/
-
-		//mod = subtractionResult;
 		mod = mod->Plus(product.get());
 	}
 }

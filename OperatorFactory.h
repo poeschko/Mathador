@@ -21,10 +21,10 @@ public:
 	template <class OperatorClass> void RegisterOperator()
 	{
 		OperatorClass instance;
-		Operator *op = instance.AsOperator(); //dynamic_cast<Operator*>(&instance);
+		Operator *op = instance.AsOperator();
 		if(op)
 		{
-			string symbol = op->OperatorSymbol(); //OperatorClass().OperatorSymbol();
+			string symbol = op->OperatorSymbol();
 			if(symbol != "")
 				RegisterType<OperatorClass>(symbol);
 		}

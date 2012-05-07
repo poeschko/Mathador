@@ -42,7 +42,6 @@ public:
 	virtual string Name() { return "Power"; }
 	virtual string OperatorSymbol() { return "^"; }
 	virtual OperatorPrecedence Precedence() { return 590; }
-	//virtual OperatorGrouping Grouping() { return ogRight; }
 	virtual AttributeSet Attributes()
 	{
 		return AttributeSet(atListable, atNumericFunction, atOneIdentity, atProtected);

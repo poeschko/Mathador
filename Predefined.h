@@ -33,10 +33,6 @@ public:
 	{
 		return AttributeSet(atProtected);
 	}
-	/*virtual std::string OperatorSymbol()
-	{
-		return "";
-	}*/
 	virtual Operator *AsOperator()
 	{
 		return 0;

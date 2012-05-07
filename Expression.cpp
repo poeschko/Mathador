@@ -179,12 +179,6 @@ void Expression::InsertLeaf(ExprVector::iterator position, Expression *leaf)
 	leaves.insert(position, leaf);
 }
 
-/*void Expression::DeleteLeaf(ExprVector::const_iterator leaf)
-{
-	delete *leaf;
-	leaves.erase(leaf);
-}*/
-
 Expression *Expression::DoClone()
 {
 	Expression *result(new Expression());
@@ -203,7 +197,6 @@ ExprPtr Expression::Clone()
 	for(ExprVector::const_iterator leaf = leaves.begin(); leaf != leaves.end(); ++leaf)
 		result->AppendLeaf((*leaf)->Clone());
 	return result;
-	//return ExprPtr(DoClone());
 }
 
 void Expression::AssignCloned(Expression *expression)
@@ -226,18 +219,7 @@ void Expression::MoveNotCloned(ExprPtr source)
 	leaves = source->leaves;
 	source->head = 0;
 	source->leaves.clear();
-	//delete source;
 }
-
-/*void Expression::MoveNotCloned(Expression &source)
-{
-	delete head;
-	DeleteLeaves();
-	head = source.head;
-	leaves = source.leaves;
-	source.head = 0;
-	source.leaves.clear();
-}*/
 
 void Expression::MoveLeaves(Expression *source)
 {
@@ -654,21 +636,6 @@ Number *Expression::NumberHead()
 	return dynamic_cast<Number*>(head);
 }
 
-/*Integer *Expression::IntegerHead()
-{
-	return dynamic_cast<Integer*>(head);
-}
-
-MachineInteger *Expression::MachineIntegerHead()
-{
-	return dynamic_cast<MachineInteger*>(head);
-}
-
-Real *Expression::RealHead()
-{
-	return dynamic_cast<Real*>(head);
-}*/
-
 Symbol *Expression::SymbolHead()
 {
 	return dynamic_cast<Symbol*>(head);
@@ -678,14 +645,6 @@ Symbol *Expression::SymbolHead()
 // This is done by numerically evaluating its leaves and then evaluating the whole expression.
 void Expression::ApplyN(Calculator *calculator)
 {
-	// When Integer expression: replace Integer by Real head
-	/*Integer *intHead = dynamic_cast<Integer*>(head);
-	if(intHead)
-	{
-		Real *realHead = intHead->ConvertToReal();
-		delete intHead;
-		head = realHead;
-	}*/
 	Number *numberHead = NumberHead();
 	if(numberHead)
 	{

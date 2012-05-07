@@ -22,11 +22,6 @@ void MatchExpressionCallback::Initialize(Expression *theExpression, Expression *
 	parentCallback = callback;
 }
 
-/*void MatchExpressionCallback::operator ()(Substitutions *subs, bool &continueMatching)
-{
-	Execute(subs, continueMatching);
-}*/
-
 void MatchPatternCallback::InitializePattern(const string &name, Expression *value)
 {
 	patternName = name;
@@ -35,11 +30,9 @@ void MatchPatternCallback::InitializePattern(const string &name, Expression *val
 
 void MatchPatternCallback::Execute(Substitutions *subs, bool &continueMatching)
 {
-	//Definition *functionDef = expression->FunctionDefinition(calculator);
 	Substitutions newSubs;
 	newSubs.Insert(subs);
 	newSubs.SetSubstitution(patternName, patternValue);
-	//(*parentCallback)(&newSubs, continueMatching);
 	parentCallback->Execute(&newSubs, continueMatching);
 }
 
@@ -48,7 +41,6 @@ void MatchHeadCallback::Execute(Substitutions *subs, bool &continueMatching)
 	// Cannot match if pattern has no leaves and expression has leaves
 	// (possible vice-versa: BlankNullSequence!)
 	if(pattern->EmptyLeaves() && expression->EmptyLeaves())
-		//(*parentCallback)(subs, continueMatching);
 		parentCallback->Execute(subs, continueMatching);
 	else if(!pattern->EmptyLeaves())
 	{
@@ -57,7 +49,6 @@ void MatchHeadCallback::Execute(Substitutions *subs, bool &continueMatching)
 		if(functionDef)
 			attributes = functionDef->Attributes();
 		auto_ptr< SubsetGenerator<Expression*> > subsetGenerator(0);
-		//SubsetGenerator<Expression*> *subsetGenerator(0);
 		if(attributes.Contains(atOrderless))
 			subsetGenerator.reset(new OrderlessSubsetGenerator<Expression*>(expression->Leaves()));
 		else
@@ -65,7 +56,6 @@ void MatchHeadCallback::Execute(Substitutions *subs, bool &continueMatching)
 		LeafSubsetCallback subsetCallback(expression, pattern, calculator, subs,
 			parentCallback, subsetGenerator.get(), pattern->Leaves().begin());
 		continueMatching = subsetGenerator->GenerateSubsets(&subsetCallback);
-		//delete subsetGenerator;
 	}
 }
 
@@ -132,8 +122,6 @@ void MatchReplaceCallback::ExecutePartial(Substitutions *subs, bool &continueMat
 		old = expression->Clone();
 	// Delete first expression, but keep leave. (Will be replaced by 
 	// replacing expression.) Delete all other matching leaves.
-	//delete **selection.begin();
-	//PositionSet::const_iterator selected = selection.begin();
 	ExprVector::iterator firstMatchingLeaf;
 	for(PositionSet::const_reverse_iterator selected = selection.rbegin(); selected != selection.rend(); ++selected)
 	{
@@ -141,19 +129,12 @@ void MatchReplaceCallback::ExecutePartial(Substitutions *subs, bool &continueMat
 		firstMatchingLeaf = *selected;
 		expression->DeleteLeaf(firstMatchingLeaf);
 	}
-	/*for(PositionSet::const_iterator selected = selection.begin(); selected != selection.end(); ++selected)
-	{
-		ExprVector::iterator leaf = *selected;
-		expression->DeleteLeaf(leaf);
-	}*/
 	ExprPtr partialResult(replace->Clone());
 	partialResult->Substitute(subs);
-	//*selection. = partialResult;
 	expression->InsertLeaf(firstMatchingLeaf, partialResult.release());
 	if(changed)
 	{
 		*changed = !old->SameExpression(expression);
-		//delete old;
 	}
 	if(matches)
 		*matches = true;

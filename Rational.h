@@ -15,16 +15,10 @@ private:
 	Integer denominator;
 protected:
 	// ConvertingNumber methods
-	/*virtual NumberConvertLevel ConvertLevel()
-	{
-		return 20;
-	}*/
 	virtual auto_ptr<Rational> DoConvert(Number *number);
 	virtual auto_ptr<Number>  Plus(Rational *number);
 	virtual auto_ptr<Number>  Times(Rational *number);
 	virtual auto_ptr<Number>  Power(Rational *number);
-	//virtual NumberPtr Divide(Number *number);
-	//virtual NumberPtr Mod(Number *number);
 	virtual CompareResult Compare(Rational *number);
 public:
 	// Constructors, destructor

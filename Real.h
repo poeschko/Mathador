@@ -8,8 +8,6 @@
 #pragma once
 #include "ConvertingNumber.h"
 #include "Integer.h"
-//#include "Exceptions.h"
-//#include <cmath>
 
 class Complex;
 
@@ -29,8 +27,6 @@ public:
 	{
 		return NumberPtr(CloneNumber());
 	}
-	//virtual void Sin() { } // TODO: implement!
-	//virtual void Cos() { }
 };
 
 class MachineReal : public ConvertingNumber<MachineReal, 31,
@@ -40,10 +36,6 @@ private:
 	RealType value;
 protected:
 	// ConvertingNumber methods
-	/*virtual NumberConvertLevel ConvertLevel()
-	{
-		return 31;
-	}*/
 	virtual auto_ptr<MachineReal> DoConvert(Number *number);
 public:
 	// Constructors, destructor
@@ -59,20 +51,6 @@ public:
 		return ExprPtr(new MachineReal(value));
 	}
 	virtual void Print(Calculator *calculator, PrintMode mode);
-	/*virtual string AtomName()
-	{
-		return "Real";
-	}
-	virtual bool SameExpression(Expression *expression)
-	{
-		// TODO: consider equal if difference less than uncertainty
-		MachineReal *real(dynamic_cast<MachineReal*>(expression));
-		return real && (Compare(real) == crEqual);
-	}
-	virtual NumberPtr ApplyN()
-	{
-		return NumberPtr(new MachineReal(value));
-	}*/
 
 	// Number methods
 	virtual void Negate();
@@ -85,8 +63,6 @@ public:
 	virtual auto_ptr<MachineReal> Plus(MachineReal *number);
 	virtual auto_ptr<MachineReal> Times(MachineReal *number);
 	virtual auto_ptr<Number> Power(MachineReal *number);
-	//virtual auto_ptr<MachineReal> Divide(MachineReal *number);
-	//virtual auto_ptr<MachineReal> Mod(MachineReal *number);
 	virtual CompareResult Compare(MachineReal *number);
 
 	virtual NumberPtr Sin();
@@ -101,16 +77,6 @@ private:
 	Integer mantissa;
 	Integer exponent;
 protected:
-	/*virtual NumberConvertLevel ConvertLevel()
-	{
-		return 32;
-	}*/
-	/*virtual NumberPtr DoPlus(Number *number);
-	virtual NumberPtr DoTimes(Number *number);
-	virtual NumberPtr DoPower(Number *number);
-	virtual NumberPtr DoDivide(Number *number);
-	virtual NumberPtr DoMod(Number *number);
-	virtual CompareResult DoCompare(Number *number);*/
 	virtual auto_ptr<ArbitraryReal> DoConvert(Number *number);
 public:
 	// Constructors, destructor
@@ -125,20 +91,6 @@ public:
 		return ExprPtr(new ArbitraryReal(*this));
 	}
 	virtual void Print(Calculator *calculator, PrintMode mode);
-	/*virtual string AtomName()
-	{
-		return "Real";
-	}
-	virtual bool SameExpression(Expression *expression)
-	{
-		// TODO: consider equal if difference less than uncertainty
-		ArbitraryReal *real(dynamic_cast<ArbitraryReal*>(expression));
-		return real && (Compare(real) == crEqual);
-	}
-	virtual NumberPtr ApplyN()
-	{
-		return NumberPtr(new ArbitraryReal(*this));
-	}*/
 
 	// Number methods
 	virtual void Negate();
@@ -151,7 +103,5 @@ public:
 	virtual auto_ptr<ArbitraryReal> Plus(ArbitraryReal *number);
 	virtual auto_ptr<ArbitraryReal> Times(ArbitraryReal *number);
 	virtual auto_ptr<Number> Power(ArbitraryReal *number);
-	//virtual auto_ptr<MachineReal> Divide(MachineReal *number);
-	//virtual auto_ptr<MachineReal> Mod(MachineReal *number);
 	virtual CompareResult Compare(ArbitraryReal *number);
 };

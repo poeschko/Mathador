@@ -14,7 +14,6 @@ private:
 public:
 	Substitutions();
 	virtual ~Substitutions();
-	//virtual bool HasSubstitution(const string &name) const;
 	virtual Expression *GetSubstitution(const string &name) const;
 	virtual void SetSubstitution(const string &name, Expression *value);
 	virtual void Insert(Substitutions *insert);

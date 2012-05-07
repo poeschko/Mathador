@@ -28,7 +28,6 @@ public:
 	virtual string Name() { return "RuleDelayed"; }
 	virtual string OperatorSymbol() { return ":>"; }
 	virtual OperatorPrecedence Precedence() { return 120; }
-	//virtual OperatorGrouping Grouping() { return ogRight; }
 	virtual AttributeSet Attributes()
 	{
 		return AttributeSet(atHoldRest, atProtected, atSequenceHold);
@@ -49,7 +48,6 @@ public:
 	virtual string Name() { return "ReplaceAll"; }
 	virtual string OperatorSymbol() { return "/."; }
 	virtual OperatorPrecedence Precedence() { return 110; }
-	//virtual OperatorGrouping Grouping() { return ogLeft; }
 	virtual void Apply(Expression *expression, Calculator *calculator, int32 recursions);
 };
 
@@ -59,6 +57,5 @@ public:
 	virtual string Name() { return "ReplaceRepeated"; }
 	virtual string OperatorSymbol() { return "//."; }
 	virtual OperatorPrecedence Precedence() { return 110; }
-	//virtual OperatorGrouping Grouping() { return ogLeft; }
 	virtual void Apply(Expression *expression, Calculator *calculator, int32 recursions);
 };

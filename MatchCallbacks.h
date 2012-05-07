@@ -14,11 +14,9 @@ protected:
 	Expression *pattern;
 	Calculator *calculator;
 	MatchCallback *parentCallback;
-	//virtual void Execute(Substitutions *subs, bool &continueMatching) = 0;
 public:
 	MatchExpressionCallback();
 	virtual ~MatchExpressionCallback();
-	//void operator ()(Substitutions *subs, bool &continueMatching);
 	virtual void Initialize(Expression *theExpression, Expression *thePattern,
 		Calculator *theCalculator, MatchCallback *callback);
 };

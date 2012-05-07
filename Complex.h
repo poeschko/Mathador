@@ -16,16 +16,10 @@ private:
 	NumberPtr imaginary;
 protected:
 	// ConvertingNumber methods
-	/*virtual NumberConvertLevel ConvertLevel()
-	{
-		return 40;
-	}*/
 	virtual auto_ptr<Complex> DoConvert(Number *number);
 	virtual auto_ptr<Complex> Plus(Complex *number);
 	virtual auto_ptr<Complex> Times(Complex *number);
 	virtual auto_ptr<Complex> Power(Complex *number);
-	//virtual NumberPtr DoDivide(Number *number);
-	//virtual NumberPtr DoMod(Number *number);
 	virtual CompareResult Compare(Complex *number);
 public:
 	// Constructors, destructor

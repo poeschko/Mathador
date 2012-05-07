@@ -14,12 +14,6 @@ void MatchQ::Apply(Expression *expression, Calculator *calculator, int32 recursi
 {
 	if(expression->LeafCount() != 2)
 		throw ArgumentException("MatchQ expects 2 arguments.");
-	/*DefsVector possibleDefs;
-	bool matches = expression->Leaf(0)->Matches(expression->Leaf(1), possibleDefs, calculator);
-	for(DefsVector::const_iterator defs = possibleDefs.begin(); defs != possibleDefs.end(); ++defs)
-		delete *defs;
-	delete expression->Head();
-	expression->DeleteLeaves();*/
 	bool matches = expression->Leaf(0)->Matches(expression->Leaf(1), calculator);
 	delete expression->Head();
 	expression->DeleteLeaves();

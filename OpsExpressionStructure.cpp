@@ -23,9 +23,6 @@ void OpHead::Apply(Expression *expression, Calculator *calculator, int32 recursi
 	else
 	{
 		ExprPtr head(leaf->Head()->Clone());
-		//expression->DeleteLeaves();
-		//delete expression->Head();
-		//expression->Head(0);
 		expression->MoveNotCloned(head);
 	}
 }

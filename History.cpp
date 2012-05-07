@@ -13,8 +13,5 @@ History::~History()
 
 void History::Push(ExprPtr inValue, ExprPtr outValue)
 {
-	//in.push_back(inValue);
-	//out.push_back(outValue);
-	//items.push_back(HistoryItem(inValue, outValue));
 	items.push_back(new HistoryItem(inValue, outValue));
 }

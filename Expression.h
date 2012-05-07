@@ -85,7 +85,6 @@ public:
 	// Copying
 	virtual ExprPtr Clone();	// not virtual to prohibit overriding. DoClone() must be overridden
 	virtual void AssignCloned(Expression *expression);
-	//virtual void MoveNotCloned(Expression &expression);
 	virtual void MoveNotCloned(ExprPtr source);
 	virtual void MoveLeaves(Expression *source);
 	virtual void AssignLeaf(ExprVector::size_type position);
@@ -136,9 +135,6 @@ public:
 	virtual bool IsAtom();
 	virtual Atom *AtomHead();
 	virtual Number *NumberHead();
-	//virtual Integer *IntegerHead();
-	//virtual MachineInteger *MachineIntegerHead();
-	//virtual Real *RealHead();
 	virtual Symbol *SymbolHead();
 
 	// Attribute application

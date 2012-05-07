@@ -16,7 +16,6 @@ void LeafSubsetCallback::Execute(ExprVectorPositions selection, bool &continueGe
 		AttributeSet attributes;
 		if(functionDef)
 			attributes = functionDef->Attributes();
-		//bool continueGenerating(true);
 		auto_ptr<Expression> sequence(new Expression);
 		sequence->Leaves().reserve(selection.size());
 		for(ExprVectorPositions::const_iterator leaf = selection.begin(); leaf != selection.end(); ++leaf)
@@ -32,10 +31,8 @@ void LeafSubsetCallback::Execute(ExprVectorPositions selection, bool &continueGe
 				sequence->Leaves().clear();
 				return;
 			}
-			//auto_ptr<Expression> flat(new Expression(pattern->FunctionName(), selection.size()));
 		}
 		sequence->Head(new Expression("Sequence"));
-		//auto_ptr<Expression> sequence(new Expression("Sequence", selection.size()));
 		continueGenerating = sequence->Matches(*curPatternLeaf, calculator, subs, true, leafCallback);
 		sequence->Leaves().clear();
 	}

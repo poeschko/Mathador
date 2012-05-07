@@ -33,11 +33,6 @@ uint64 max(const uint64 x, const uint64 y)
 	return x > y ? x : y;
 }
 
-/*size_t max(const size_t x, const size_t y)
-{
-	return x > y ? x : y;
-}*/
-
 int64 min(const int64 x, const int64 y)
 {
 	return x < y ? x : y;
