@@ -9,5 +9,6 @@
 ** stdafx.obj will contain the pre-compiled type information.
 **
 */
-
+#if defined(WIN32)
 #include "stdafx.h"
+#endif
